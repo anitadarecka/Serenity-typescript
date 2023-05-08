@@ -1,17 +1,35 @@
 import React, { useEffect, useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
-import api from "@services/api";
+import api from "../../services/api";
 import AddPatientInput from "./AddPatientInput";
 import { useAuth } from "../../contexts/AuthContext";
 import inputArray from "./utils_input";
 import "../../Tailwind.css";
 import "react-toastify/dist/ReactToastify.css";
 
+interface Surgery {
+  description: string;
+  id: number;
+  name: string;
+  type: string;
+}
+
+interface NewPatient {
+  lastname: null | string;
+  firstname: null | string;
+  mail: null | string;
+  place: null | string;
+  birth: null | string;
+  phone: null | string;
+  [key: string]: any; 
+}
+
 function AddPatient() {
   const { oneDoctor } = useAuth();
+  console.log(oneDoctor);
   const [selectedSurgery, setSelectedSurgery] = useState("");
-  const [surgeriesList, SetSurgeriesList] = useState([]);
-  const [addNewPatient, setAddNewPatient] = useState({
+  const [surgeriesList, SetSurgeriesList] = useState<Surgery[]>([]);
+  const [addNewPatient, setAddNewPatient] = useState<NewPatient>({
     lastname: null,
     firstname: null,
     mail: null,
@@ -20,7 +38,7 @@ function AddPatient() {
     phone: null,
   });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.MouseEvent<HTMLFormElement>) => {
     e.preventDefault();
     const url = "/patients";
     if (
@@ -117,7 +135,7 @@ function AddPatient() {
     getAllSurgeries();
   }, []);
 
-  const handleChange = (event) => {
+  const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedSurgery(event.target.value);
   };
   return (
@@ -152,7 +170,7 @@ function AddPatient() {
             placeholder={element.placeholder}
             label={element.label}
             addNewPatient={addNewPatient}
-            setAddNewPatient={setAddNewPatient}
+            setAddNewPatient={setAddNewPatient} 
           />
         ))}
       </div>

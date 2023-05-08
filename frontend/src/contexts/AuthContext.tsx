@@ -1,17 +1,49 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import propTypes from "prop-types";
-import api from "@services/api";
+import api from "../services/api";
+
+type Doctor = {
+  email: string;
+  firstname: string;
+  genre: string;
+  id: number;
+  image: string;
+  languages: string;
+  lastname: string;
+  phone: string;
+  specialization: string;
+}
+
+interface User {
+  email: string; 
+  firstname: string;
+  id: number;
+  lastname: string;
+}
+
+interface AuthProviderProps {
+  children: React.ReactNode;
+}
 
 const authContext = createContext({});
 
-export function AuthProvider({ children }) {
+export function AuthProvider({ children }: AuthProviderProps) {
   const { Provider } = authContext;
   const [onePatient, setOnePatient] = useState({});
-  const [oneDoctor, setOneDoctor] = useState({});
+  const [oneDoctor, setOneDoctor] = useState<Doctor>({email: "",
+    firstname: "",
+    genre: "",
+    id: 0,
+    image: "",
+    languages: "",
+    lastname: "",
+    phone: "",
+    specialization: "",
+  });
   const [userEmail, setUserEmail] = useState("");
   const [documents, setDocuments] = useState([]);
-  const [role, setRole] = useState();
+  const [role, setRole] = useState<number | null>();
   const [refresh, setRefresh] = useState(false);
   const roleCheck = () => {
     const url = "/users/roleCheck";
@@ -36,7 +68,14 @@ export function AuthProvider({ children }) {
   };
   const navigate = useNavigate();
 
-  const [loginData, setLoginData] = useState({ data: null });
+  const noUser = {
+    email: "", 
+    firstname: "",
+    id: 0,
+    lastname: "",
+  }
+
+  const [loginData, setLoginData] = useState<User>({ noUser });
 
   const getOnePatient = () => {
     const url = "/patients/email";
@@ -52,7 +91,7 @@ export function AuthProvider({ children }) {
     });
   };
 
-  const login = (data) => {
+  const login = (data: User) => {
     setLoginData({ data });
     roleCheck();
     authCheck();
@@ -61,11 +100,14 @@ export function AuthProvider({ children }) {
   };
 
   const logout = () => {
-    setLoginData({});
+    setLoginData({  email: "", 
+      firstname: "",
+      id: 0,
+      lastname: ""});
     setOneDoctor({});
     setOnePatient({});
     window.localStorage.removeItem("user");
-    setRole();
+    setRole(null);
     navigate("/");
   };
 

@@ -39,6 +39,15 @@ function AddPatientInput({
   );
 }
 
+const NewPatientPropTypes = {
+  lastname: PropTypes.string,
+  firstname: PropTypes.string,
+  mail: PropTypes.string,
+  place: PropTypes.string,
+  birth: PropTypes.string,
+  phone: PropTypes.string,
+};
+
 AddPatientInput.propTypes = {
   classNameDiv: PropTypes.string.isRequired,
   classNameInput: PropTypes.string.isRequired,
@@ -48,7 +57,7 @@ AddPatientInput.propTypes = {
   name: PropTypes.string.isRequired,
   placeholder: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
-  addNewPatient: PropTypes.func.isRequired,
+  addNewPatient: PropTypes.shape(NewPatientPropTypes).isRequired,
   setAddNewPatient: PropTypes.func.isRequired,
 };
 
