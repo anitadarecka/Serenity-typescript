@@ -21,7 +21,7 @@ interface AddPatientInputProps {
   label: string;
   value: string;
   addNewPatient: NewPatient;
-  setAddNewPatient: Dispatch<SetStateAction<NewPatient>>
+  setAddNewPatient: Dispatch<SetStateAction<NewPatient>>;
 }
 
 function AddPatientInput({

@@ -1,12 +1,16 @@
 /* eslint-disable import/no-unresolved */
-import React from "react";
-import dataPreparationArrivee from "@components/FormailtyAdministrative/arrivée/dataPréparationArrivée";
-import Btn from "@components/components_reutilisable/Btn";
+import React, { useState } from "react";
+import dataPreparationArrivee from "../../../components/FormailtyAdministrative/arrivée/dataPréparationArrivée";
+import Btn from "../../../components/components_reutilisable/Btn";
 import { useAuth } from "../../../contexts/AuthContext";
 
+interface AuthContextType {
+  role?: number;
+}
+
 function Arrivee() {
-  const [current, setCurrent] = React.useState(0);
-  const { role } = useAuth();
+  const [current, setCurrent] = useState(0);
+  const { role }: AuthContextType = useAuth();
   const handleNext = () => {
     if (current < 3) {
       setCurrent(current + 1);

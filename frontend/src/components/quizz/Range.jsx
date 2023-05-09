@@ -10,9 +10,9 @@ import heureux from "./assets/smiley04.png";
 function Range({ handleNext, current, data, setData, ask, handleEnd }) {
   const [emoji, setEmoji] = useState(content);
   const [show, setShow] = useState(true);
-  if (ask.length === ask[current]?.id && show === true) {
+  if (ask && ask.length === ask[current]?.id && show === true) {
     setShow(!show);
-  } else if (ask.length !== ask[current]?.id && show === false) {
+  } else if (ask && ask.length !== ask[current]?.id && show === false) {
     setShow(!show);
   }
   useEffect(() => {

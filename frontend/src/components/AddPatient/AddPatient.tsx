@@ -21,7 +21,7 @@ interface NewPatient {
   place: null | string;
   birth: null | string;
   phone: null | string;
-  [key: string]: any; 
+  [key: string]: any;
 }
 
 type Doctor = {
@@ -34,7 +34,7 @@ type Doctor = {
   lastname: string;
   phone: string;
   specialization: string;
-}
+};
 
 interface AuthContextType {
   oneDoctor?: Doctor;
@@ -185,7 +185,7 @@ function AddPatient() {
             placeholder={element.placeholder}
             label={element.label}
             addNewPatient={addNewPatient}
-            setAddNewPatient={setAddNewPatient} 
+            setAddNewPatient={setAddNewPatient}
           />
         ))}
       </div>

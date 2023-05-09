@@ -1,7 +1,14 @@
-import React from "react";
-import { PropTypes } from "prop-types";
+import React, { MouseEventHandler, ReactNode } from "react";
+import PropTypes from "prop-types";
 
-function Btn({ type, label, handleClick, color }) {
+interface BtnProps {
+  type?: "button" | "submit" | "reset" | undefined;
+  label: ReactNode;
+  handleClick: MouseEventHandler<HTMLButtonElement>;
+  color: string;
+}
+
+function Btn({ type, label, handleClick, color }: BtnProps) {
   return (
     <div>
       <button

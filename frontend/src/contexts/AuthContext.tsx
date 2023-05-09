@@ -13,7 +13,7 @@ type Doctor = {
   lastname: string;
   phone: string;
   specialization: string;
-}
+};
 
 interface Patient {
   birth_date: string;
@@ -43,7 +43,7 @@ interface Patient {
 }
 
 interface User {
-  email: string; 
+  email: string;
   firstname: string;
   id: number;
   lastname: string;
@@ -51,7 +51,7 @@ interface User {
 
 type LoginData = {
   data: User;
-}
+};
 
 interface AuthProviderProps {
   children: React.ReactNode;
@@ -91,17 +91,17 @@ interface Document {
 
 type Valeur = {
   average: string | null;
-}
+};
 
 const authContext = createContext({});
 
 export function AuthProvider({ children }: AuthProviderProps) {
   const user = {
-    email: "", 
+    email: "",
     firstname: "",
     id: 0,
     lastname: "",
-  }  
+  };
   const patient = {
     birth_date: "",
     birth_place: "",
@@ -127,7 +127,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     street: "",
     tel_fixe: "",
     test: null,
-  }
+  };
   const doctor = {
     email: "",
     firstname: "",
