@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import propTypes from "prop-types";
 import api from "../services/api";
@@ -15,6 +15,33 @@ type Doctor = {
   specialization: string;
 }
 
+interface Patient {
+  birth_date: string;
+  birth_place: string;
+  children: number;
+  city: string;
+  country: string;
+  email: string;
+  family_status: string;
+  firstname: string;
+  genre: string;
+  id: number;
+  image: string;
+  languages: string;
+  lastname: string;
+  maiden_name: string;
+  mobile: string;
+  postal_code: string;
+  profession: string;
+  sex: string;
+  situation_pro: string;
+  social_number: string;
+  status: string;
+  street: string;
+  tel_fixe: string;
+  test: null;
+}
+
 interface User {
   email: string; 
   firstname: string;
@@ -22,16 +49,87 @@ interface User {
   lastname: string;
 }
 
+type LoginData = {
+  data: User;
+}
+
 interface AuthProviderProps {
   children: React.ReactNode;
+}
+
+interface Document {
+  birth_date: string;
+  birth_place: string;
+  checked: number;
+  children: number;
+  city: string;
+  country: string;
+  document_id: number;
+  email: string;
+  family_status: string;
+  firstname: string;
+  genre: string;
+  id: number;
+  image: string;
+  languages: string;
+  lastname: string;
+  maiden_name: string;
+  mandatory: number;
+  mobile: string;
+  patient_id: number;
+  postal_code: string;
+  profession: string;
+  sex: string;
+  situation_pro: string;
+  social_number: string;
+  status: string;
+  street: string;
+  tel_fixe: string;
+  test: null;
+  type: string;
+}
+
+type Valeur = {
+  average: string | null;
 }
 
 const authContext = createContext({});
 
 export function AuthProvider({ children }: AuthProviderProps) {
-  const { Provider } = authContext;
-  const [onePatient, setOnePatient] = useState({});
-  const [oneDoctor, setOneDoctor] = useState<Doctor>({email: "",
+  const user = {
+    email: "", 
+    firstname: "",
+    id: 0,
+    lastname: "",
+  }  
+  const patient = {
+    birth_date: "",
+    birth_place: "",
+    children: 0,
+    city: "",
+    country: "",
+    email: "",
+    family_status: "",
+    firstname: "",
+    genre: "",
+    id: 0,
+    image: "",
+    languages: "",
+    lastname: "",
+    maiden_name: "",
+    mobile: "",
+    postal_code: "",
+    profession: "",
+    sex: "",
+    situation_pro: "",
+    social_number: "",
+    status: "",
+    street: "",
+    tel_fixe: "",
+    test: null,
+  }
+  const doctor = {
+    email: "",
     firstname: "",
     genre: "",
     id: 0,
@@ -40,10 +138,14 @@ export function AuthProvider({ children }: AuthProviderProps) {
     lastname: "",
     phone: "",
     specialization: "",
-  });
+  };
+  const { Provider } = authContext;
+  const [onePatient, setOnePatient] = useState<Patient>(patient);
+  const [oneDoctor, setOneDoctor] = useState<Doctor>(doctor);
   const [userEmail, setUserEmail] = useState("");
-  const [documents, setDocuments] = useState([]);
-  const [role, setRole] = useState<number | null>();
+  const [documents, setDocuments] = useState<Document[]>([]);
+  console.log(documents);
+  const [role, setRole] = useState<number | null>(null);
   const [refresh, setRefresh] = useState(false);
   const roleCheck = () => {
     const url = "/users/roleCheck";
@@ -68,14 +170,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   };
   const navigate = useNavigate();
 
-  const noUser = {
-    email: "", 
-    firstname: "",
-    id: 0,
-    lastname: "",
-  }
-
-  const [loginData, setLoginData] = useState<User>({ noUser });
+  const [loginData, setLoginData] = useState<LoginData>({ data: user });
 
   const getOnePatient = () => {
     const url = "/patients/email";
@@ -100,12 +195,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
   };
 
   const logout = () => {
-    setLoginData({  email: "", 
-      firstname: "",
-      id: 0,
-      lastname: ""});
-    setOneDoctor({});
-    setOnePatient({});
+    setLoginData({ data: user });
+    setOneDoctor(doctor);
+    setOnePatient(patient);
     window.localStorage.removeItem("user");
     setRole(null);
     navigate("/");
@@ -154,7 +246,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     }
   }, [onePatient, refresh]);
 
-  const [valeur, setValeur] = useState([]);
+  const [valeur, setValeur] = useState<Valeur>({ average: null });
   const getValeur = () => {
     if (onePatient.id !== undefined) {
       const url = `/question_result/${onePatient.id}`;
