@@ -24,9 +24,24 @@ interface NewPatient {
   [key: string]: any; 
 }
 
+type Doctor = {
+  email: string;
+  firstname: string;
+  genre: string;
+  id: number;
+  image: string;
+  languages: string;
+  lastname: string;
+  phone: string;
+  specialization: string;
+}
+
+interface AuthContextType {
+  oneDoctor?: Doctor;
+}
+
 function AddPatient() {
-  const { oneDoctor } = useAuth();
-  console.log(oneDoctor);
+  const { oneDoctor }: AuthContextType = useAuth();
   const [selectedSurgery, setSelectedSurgery] = useState("");
   const [surgeriesList, SetSurgeriesList] = useState<Surgery[]>([]);
   const [addNewPatient, setAddNewPatient] = useState<NewPatient>({
@@ -68,7 +83,7 @@ function AddPatient() {
           }/uploads/avatar-undefined.png`,
         })
         .then((res) => {
-          if (res.status === 201) {
+          if (res.status === 201 && oneDoctor) {
             const { patientId } = res.data;
             const surgeryId = selectedSurgery;
             const doctordId = oneDoctor.id;
