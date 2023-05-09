@@ -144,7 +144,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const [oneDoctor, setOneDoctor] = useState<Doctor>(doctor);
   const [userEmail, setUserEmail] = useState("");
   const [documents, setDocuments] = useState<Document[]>([]);
-  console.log(documents);
   const [role, setRole] = useState<number | null>(null);
   const [refresh, setRefresh] = useState(false);
   const roleCheck = () => {

@@ -1,6 +1,28 @@
 import PropTypes from "prop-types";
-import React from "react";
+import React, { ChangeEvent, Dispatch, SetStateAction } from "react";
 import "../../Tailwind.css";
+
+interface NewPatient {
+  lastname: null | string;
+  firstname: null | string;
+  mail: null | string;
+  place: null | string;
+  birth: null | string;
+  phone: null | string;
+}
+
+interface AddPatientInputProps {
+  name: string;
+  id: number;
+  type: string;
+  classNameInput: string;
+  classNameDiv: string;
+  placeholder: string;
+  label: string;
+  value: string;
+  addNewPatient: NewPatient;
+  setAddNewPatient: Dispatch<SetStateAction<NewPatient>>
+}
 
 function AddPatientInput({
   name,
@@ -13,14 +35,13 @@ function AddPatientInput({
   value,
   addNewPatient,
   setAddNewPatient,
-}) {
-  const handleChange = (e) => {
+}: AddPatientInputProps) {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setAddNewPatient({
       ...addNewPatient,
       [e.target.name]: e.target.value,
     });
   };
-
   return (
     <div key={id} className={classNameDiv}>
       <label className="ml-1" htmlFor={name}>
